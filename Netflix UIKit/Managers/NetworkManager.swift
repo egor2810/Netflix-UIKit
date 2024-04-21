@@ -55,7 +55,7 @@ final class NetworkManager {
             }
             
             do {
-                let results = try JSONDecoder().decode(TrendingMovieResponse.self, from: data)
+                let results = try JSONDecoder().decode(TrendingTitleResponse.self, from: data)
                 completion(.success(results.results))
             } catch {
                 completion(.failure(error))
