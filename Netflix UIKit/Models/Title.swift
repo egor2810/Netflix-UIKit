@@ -1,5 +1,5 @@
 //
-//  Movie.swift
+//  Title.swift
 //  Netflix UIKit
 //
 //  Created by Егор Аблогин on 21.04.2024.
@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct TrendingMovieResponse: Decodable {
-    let results: [Movie]
+struct TrendingTitleResponse: Decodable {
+    let results: [Title]
 }
 
 
-struct Movie: Decodable {
+struct Title: Decodable {
     let id: Int
     let media_type: String?
     let original_name: String?

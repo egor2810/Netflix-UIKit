@@ -46,7 +46,7 @@ class HomeViewController: UIViewController {
         )
         
         homeFeedTable.tableHeaderView = headerView
-        getTrendingMovies()
+        getTrendingTitle()
        
     }
     
@@ -73,7 +73,7 @@ class HomeViewController: UIViewController {
     }
 
     // MARK: - getTrendingMovies
-    private func getTrendingMovies() {
+    private func getTrendingTitle() {
         NetworkManager.shared.fetchTrendingMovies { result in
             switch result {
                 case .success(let movies):

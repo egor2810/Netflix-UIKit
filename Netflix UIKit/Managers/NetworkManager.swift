@@ -22,7 +22,7 @@ final class NetworkManager {
     
     private init() {}
     
-    func fetchTrendingMovies(completion: @escaping (Result<[Movie], Error>) -> Void) {
+    func fetchTrendingMovies(completion: @escaping (Result<[Title], Error>) -> Void) {
         
         guard let url = URL(string: "\(Constants.baseURL)/3/trending/movie/day") else {
             print("Invalid URL")
