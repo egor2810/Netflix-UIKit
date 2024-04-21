@@ -9,8 +9,17 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
+    let sectionTitles = [
+        "Trending Movies",
+        "Popular",
+        "Trending TV",
+        "Upcoming movies",
+        "Top rated"
+    ]
+    
     private let homeFeedTable: UITableView = {
         let table = UITableView(frame: .zero, style: .grouped)
+        table.backgroundColor = .clear
         table.register(
             CollectionViewTableViewCell.self,
             forCellReuseIdentifier: CollectionViewTableViewCell.identifier
@@ -22,20 +31,41 @@ class HomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.backgroundColor = .systemBackground
         view.addSubview(homeFeedTable)
         
         homeFeedTable.delegate = self
         homeFeedTable.dataSource = self
+
+        configureNavBar()
         
-        let headerView = HeroHeaderUIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 459))
+        let headerView = HeroHeaderUIView(
+            frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 459)
+        )
+        
         homeFeedTable.tableHeaderView = headerView
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         homeFeedTable.frame = view.bounds
+    }
+    
+    private func configureNavBar() {
+        var image = UIImage(named: "logo")
+        image = image?.withRenderingMode(.alwaysOriginal)
+  
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            image: image, style: .done, target: self, action: nil
+        )
+        
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(image: UIImage(systemName: "person"), style: .done, target: self, action: nil),
+            UIBarButtonItem(image: UIImage(systemName: "play.rectangle"), style: .done, target: self, action: nil)
+        ]
+        
+        navigationController?.navigationBar.tintColor = .label
     }
 
 
@@ -56,8 +86,30 @@ extension HomeViewController: UITableViewDataSource {
         
         return cell
     }
-    
-    
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: 40))
+        header.backgroundColor = .clear
+        // Создаем и настраиваем UILabel
+        let label = UILabel()
+        label.backgroundColor = .clear
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = sectionTitles[section].uppercased()
+        label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+        label.textColor = .label
+        
+        header.addSubview(label)
+        
+        // Устанавливаем констрейнты для отступов
+        NSLayoutConstraint.activate([
+            label.leadingAnchor.constraint(equalTo: header.leadingAnchor, constant: 16), // Отступ слева
+            label.bottomAnchor.constraint(equalTo: header.bottomAnchor, constant: -8),   // Отступ снизу
+            label.trailingAnchor.constraint(equalTo: header.trailingAnchor, constant: -16) // Отступ справа, если нужно
+        ])
+        
+        return header
+    }
+
 }
 
 // MARK: - UITableViewDelegate
@@ -71,7 +123,14 @@ extension HomeViewController: UITableViewDelegate {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        5
+        sectionTitles.count
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let defaultOffset = view.safeAreaInsets.top
+        let offset = scrollView.contentOffset.y + defaultOffset
+
+        navigationController?.navigationBar.transform = .init(translationX: 0, y: min(0, -offset))
     }
     
 }
