@@ -9,13 +9,7 @@ import UIKit
 
 final class HomeViewController: UIViewController {
     
-    let sectionTitles = [
-        "Trending Movies",
-        "Trending TV",
-        "Popular",
-        "Upcoming movies",
-        "Top rated"
-    ]
+    let sectionTitles = Sections.allCases.map { $0.description }
     
     private let homeFeedTable: UITableView = {
         let table = UITableView(frame: .zero, style: .grouped)
@@ -24,7 +18,6 @@ final class HomeViewController: UIViewController {
             CollectionViewTableViewCell.self,
             forCellReuseIdentifier: CollectionViewTableViewCell.identifier
         )
-        
         
         return table
     }()
@@ -46,8 +39,6 @@ final class HomeViewController: UIViewController {
         )
         
         homeFeedTable.tableHeaderView = headerView
-        getTrendingTitle()
-       
     }
     
     override func viewDidLayoutSubviews() {
@@ -72,12 +63,12 @@ final class HomeViewController: UIViewController {
         navigationController?.navigationBar.tintColor = .label
     }
 
-    // MARK: - getTrendingMovies
-    private func getTrendingTitle() {
-        NetworkManager.shared.fetchTrendingMovies { result in
+    // MARK: - getTrendingTitles
+    private func getTrendingTitles(for section: Sections, in cell: CollectionViewTableViewCell) {
+        NetworkManager.shared.fetchTrendingTitles(for: section) { result in
             switch result {
                 case .success(let movies):
-                    print(movies)
+                    cell.configure(with: movies)
                 case .failure(let failure):
                     print(failure.localizedDescription)
             }
@@ -98,6 +89,21 @@ extension HomeViewController: UITableViewDataSource {
             for: indexPath
         ) as? CollectionViewTableViewCell
         else { return UITableViewCell() }
+        
+        switch indexPath.section {
+        case Sections.trendingMovies.rawValue:
+            getTrendingTitles(for: Sections.trendingMovies, in: cell)
+        case Sections.trendingTv.rawValue:
+            getTrendingTitles(for: Sections.trendingTv, in: cell)
+        case Sections.popular.rawValue:
+            getTrendingTitles(for: Sections.popular, in: cell)
+        case Sections.upcomingMovies.rawValue:
+            getTrendingTitles(for: Sections.upcomingMovies, in: cell)
+        case Sections.topRated.rawValue:
+            getTrendingTitles(for: Sections.topRated, in: cell)
+        default:
+            return cell
+        }
         
         return cell
     }

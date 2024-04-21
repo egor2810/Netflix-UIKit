@@ -7,11 +7,6 @@
 
 import Foundation
 
-struct Constants {
-    static let API_KEY = "0d2c20a7a13fa5f093b2a33f4ed48247"
-    static let baseURL = "https://api.themoviedb.org"
-}
-
 enum APIError: Error {
     case failedToDecodeData
 }
@@ -22,9 +17,9 @@ final class NetworkManager {
     
     private init() {}
     
-    func fetchTrendingMovies(completion: @escaping (Result<[Title], Error>) -> Void) {
+    func fetchTrendingTitles(for section: Sections, completion: @escaping (Result<[Title], Error>) -> Void) {
         
-        guard let url = URL(string: "\(Constants.baseURL)/3/trending/movie/day") else {
+        guard let url = URL(string: "\(Constants.baseURL)/3\(section.path)") else {
             print("Invalid URL")
             return
         }

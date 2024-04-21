@@ -10,13 +10,15 @@ import UIKit
 final class CollectionViewTableViewCell: UITableViewCell {
     static let identifier = "CollectionViewTableViewCell"
     
+    private var titles: [Title] = []
+    
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 140, height: 200)
         layout.scrollDirection = .horizontal
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        collectionView.register(TitleCollectionViewCell.self, forCellWithReuseIdentifier: TitleCollectionViewCell.identifier)
         
         return collectionView
     }()
@@ -39,22 +41,34 @@ final class CollectionViewTableViewCell: UITableViewCell {
         super.layoutSubviews()
         collectionView.frame = contentView.bounds
     }
+    
+    func configure(with titles: [Title]) {
+        self.titles = titles
+        DispatchQueue.main.async { [weak self] in
+            guard let self else {return}
+            self.collectionView.reloadData()
+        }
+    }
 }
 
 // MARK: - UICollectionViewDataSource
 extension CollectionViewTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        5
+        titles.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: TitleCollectionViewCell.identifier,
+            for: indexPath
+        ) as? TitleCollectionViewCell else {
+            return UICollectionViewCell()
+        }
         
-        cell.backgroundColor = .green
-        
+        cell.configure(with: titles[indexPath.row].poster_path ?? "")
+  
         return cell
     }
-    
     
 }
 
