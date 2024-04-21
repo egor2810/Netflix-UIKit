@@ -11,8 +11,8 @@ class HomeViewController: UIViewController {
     
     let sectionTitles = [
         "Trending Movies",
-        "Popular",
         "Trending TV",
+        "Popular",
         "Upcoming movies",
         "Top rated"
     ]
@@ -29,6 +29,7 @@ class HomeViewController: UIViewController {
         return table
     }()
 
+    // MARK: - ViewController life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -46,6 +47,7 @@ class HomeViewController: UIViewController {
         
         homeFeedTable.tableHeaderView = headerView
         getTrendingMovies()
+       
     }
     
     override func viewDidLayoutSubviews() {
@@ -53,6 +55,7 @@ class HomeViewController: UIViewController {
         homeFeedTable.frame = view.bounds
     }
     
+    // MARK: - Configure UI
     private func configureNavBar() {
         var image = UIImage(named: "logo")
         image = image?.withRenderingMode(.alwaysOriginal)
@@ -69,6 +72,7 @@ class HomeViewController: UIViewController {
         navigationController?.navigationBar.tintColor = .label
     }
 
+    // MARK: - getTrendingMovies
     private func getTrendingMovies() {
         NetworkManager.shared.fetchTrendingMovies { result in
             switch result {
@@ -105,7 +109,7 @@ extension HomeViewController: UITableViewDataSource {
         let label = UILabel()
         label.backgroundColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = sectionTitles[section].uppercased()
+        label.text = sectionTitles[section].capitalizeFirstLetter()
         label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         label.textColor = .label
         
@@ -144,9 +148,4 @@ extension HomeViewController: UITableViewDelegate {
         navigationController?.navigationBar.transform = .init(translationX: 0, y: min(0, -offset))
     }
     
-}
-
-
-#Preview("Main screen") {
-    MainTabBarViewController()
 }

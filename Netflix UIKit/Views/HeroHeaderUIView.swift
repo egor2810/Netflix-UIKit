@@ -94,9 +94,3 @@ class HeroHeaderUIView: UIView {
     }
 }
 
-
-#Preview("Main screen") {
-    MainTabBarViewController()
-}
-
-

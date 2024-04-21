@@ -63,7 +63,3 @@ extension CollectionViewTableViewCell: UICollectionViewDelegate {
     
 }
 
-
-#Preview("Main screen") {
-    MainTabBarViewController()
-}

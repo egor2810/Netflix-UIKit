@@ -24,9 +24,32 @@ final class NetworkManager {
     
     func fetchTrendingMovies(completion: @escaping (Result<[Movie], Error>) -> Void) {
         
-        guard let url = URL(string: "\(Constants.baseURL)/3/trending/all/day?api_key=\(Constants.API_KEY)") else { return }
+        guard let url = URL(string: "\(Constants.baseURL)/3/trending/movie/day") else {
+            print("Invalid URL")
+            return
+        }
         
-        let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, _, error in
+        var components = URLComponents(url: url, resolvingAgainstBaseURL: true)!
+        
+        // Добавление необходимых параметров запроса
+        let queryItems = [
+            URLQueryItem(name: "api_key", value: Constants.API_KEY),
+            URLQueryItem(name: "language", value: "en-US"), // Включаем если требуется
+            URLQueryItem(name: "page", value: "1") // Включаем если требуется
+        ]
+        components.queryItems = (components.queryItems ?? []) + queryItems
+        
+        guard let finalURL = components.url else {
+            print("Invalid URL components")
+            return
+        }
+        
+        var request = URLRequest(url: finalURL)
+        request.httpMethod = "GET"
+        request.timeoutInterval = 10
+        request.addValue("application/json", forHTTPHeaderField: "accept")
+        
+        let task = URLSession.shared.dataTask(with: request) { data, _, error in
             guard let data = data, error == nil else {
                 return
             }
@@ -41,5 +64,5 @@ final class NetworkManager {
         
         task.resume()
     }
-    
+
 }
