@@ -13,7 +13,7 @@ struct Constants {
 }
 
 enum APIError: Error {
-    case failedToReturnData
+    case failedToDecodeData
 }
 
 final class NetworkManager {
@@ -58,7 +58,7 @@ final class NetworkManager {
                 let results = try JSONDecoder().decode(TrendingTitleResponse.self, from: data)
                 completion(.success(results.results))
             } catch {
-                completion(.failure(error))
+                completion(.failure(APIError.failedToDecodeData))
             }
         }
         

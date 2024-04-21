@@ -21,6 +21,7 @@
 		F7CD165D2BD52C1800D8DA40 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CD165C2BD52C1800D8DA40 /* NetworkManager.swift */; };
 		F7CD165F2BD52CAC00D8DA40 /* Title.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CD165E2BD52CAC00D8DA40 /* Title.swift */; };
 		F7CD16612BD58FDF00D8DA40 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CD16602BD58FDF00D8DA40 /* Extensions.swift */; };
+		F7CD16632BD59C7800D8DA40 /* TitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CD16622BD59C7800D8DA40 /* TitleCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		F7CD165C2BD52C1800D8DA40 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		F7CD165E2BD52CAC00D8DA40 /* Title.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Title.swift; sourceTree = "<group>"; };
 		F7CD16602BD58FDF00D8DA40 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		F7CD16622BD59C7800D8DA40 /* TitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +122,7 @@
 			children = (
 				F7CD16582BD520EC00D8DA40 /* CollectionViewTableViewCell.swift */,
 				F7CD165A2BD52A7A00D8DA40 /* HeroHeaderUIView.swift */,
+				F7CD16622BD59C7800D8DA40 /* TitleCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -226,6 +229,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F7CD164C2BD50EBD00D8DA40 /* SearchViewController.swift in Sources */,
+				F7CD16632BD59C7800D8DA40 /* TitleCollectionViewCell.swift in Sources */,
 				F7CD16362BD50AE600D8DA40 /* MainTabBarViewController.swift in Sources */,
 				F7CD165F2BD52CAC00D8DA40 /* Title.swift in Sources */,
 				F7CD165D2BD52C1800D8DA40 /* NetworkManager.swift in Sources */,
