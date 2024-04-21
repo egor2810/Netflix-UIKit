@@ -7,34 +7,39 @@
 
 import Foundation
 
+struct Constants {
+    static let API_KEY = "0d2c20a7a13fa5f093b2a33f4ed48247"
+    static let baseURL = "https://api.themoviedb.org"
+}
+
+enum APIError: Error {
+    case failedToReturnData
+}
+
 final class NetworkManager {
     
     static let shared = NetworkManager()
     
     private init() {}
     
-    func fetchData() {
-        let headers = [
-            "X-RapidAPI-Key": "d0810fa978msh4151aadf8b97d10p17a265jsn2d44b1bb59c4",
-            "X-RapidAPI-Host": "netflix-unofficial.p.rapidapi.com"
-        ]
+    func fetchTrendingMovies(completion: @escaping (Result<[Movie], Error>) -> Void) {
         
-        let request = NSMutableURLRequest(url: NSURL(string: "https://netflix-unofficial.p.rapidapi.com/api/search")! as URL,
-                                          cachePolicy: .useProtocolCachePolicy,
-                                          timeoutInterval: 10.0)
-        request.httpMethod = "GET"
-        request.allHTTPHeaderFields = headers
+        guard let url = URL(string: "\(Constants.baseURL)/3/trending/all/day?api_key=\(Constants.API_KEY)") else { return }
         
-        let session = URLSession.shared
-        let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
-            if (error != nil) {
-                print(error as Any)
-            } else {
-                let httpResponse = response as? HTTPURLResponse
-                print(httpResponse)
+        let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, _, error in
+            guard let data = data, error == nil else {
+                return
             }
-        })
+            
+            do {
+                let results = try JSONDecoder().decode(TrendingMovieResponse.self, from: data)
+                completion(.success(results.results))
+            } catch {
+                completion(.failure(error))
+            }
+        }
         
-        dataTask.resume()
+        task.resume()
     }
+    
 }

@@ -45,6 +45,7 @@ class HomeViewController: UIViewController {
         )
         
         homeFeedTable.tableHeaderView = headerView
+        getTrendingMovies()
     }
     
     override func viewDidLayoutSubviews() {
@@ -68,6 +69,16 @@ class HomeViewController: UIViewController {
         navigationController?.navigationBar.tintColor = .label
     }
 
+    private func getTrendingMovies() {
+        NetworkManager.shared.fetchTrendingMovies { result in
+            switch result {
+                case .success(let movies):
+                    print(movies)
+                case .failure(let failure):
+                    print(failure.localizedDescription)
+            }
+        }
+    }
 
 }
 
