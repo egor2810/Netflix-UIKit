@@ -38,7 +38,7 @@ final class TitleCollectionViewCell: UICollectionViewCell {
     func configure(with model: String) {
         guard let url = URL(string: "\(Constants.imageBaseURL)\(model)") 
         else {return}
-        print(url)
+
         posterImageView.sd_setImage(with: url, completed: nil)
         
     }
