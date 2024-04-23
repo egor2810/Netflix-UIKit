@@ -9,6 +9,8 @@ import UIKit
 
 final class HeroHeaderUIView: UIView {
     
+    private var title: Title?
+    
     private let playButton: UIButton = {
        
         let button = UIButton()
@@ -39,7 +41,7 @@ final class HeroHeaderUIView: UIView {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.image = UIImage(named: "heroImage")
+       // imageView.image = UIImage(named: "heroImage")
         return imageView
     }()
     
@@ -47,12 +49,9 @@ final class HeroHeaderUIView: UIView {
         super.init(frame: frame)
         
         addSubview(heroImageView)
-        addGradient()
         
-        addSubview(playButton)
-        addSubview(downloadButton)
         
-        applyConstraints()
+        
     }
     
     required init?(coder: NSCoder) {
@@ -64,6 +63,11 @@ final class HeroHeaderUIView: UIView {
         heroImageView.frame = bounds
     }
     
+    func configure(with title: Title) {
+        self.title = title
+        updateUI()
+    }
+    
     private func addGradient() {
         let gradientLayer = CAGradientLayer()
         gradientLayer.colors = [
@@ -73,6 +77,7 @@ final class HeroHeaderUIView: UIView {
         ]
         gradientLayer.frame = bounds
         layer.addSublayer(gradientLayer)
+
     }
 
     private func applyConstraints() {
@@ -92,5 +97,24 @@ final class HeroHeaderUIView: UIView {
         
         NSLayoutConstraint.activate(downloadButtonConstraints)
     }
+    
+    private func updateUI() {
+        guard let title,
+              let url = URL(string: "https://image.tmdb.org/t/p/original/\(title.poster_path ?? "")")
+        else {return}
+
+
+        heroImageView.sd_setImage(with: url) {[weak self] _,_,_,_ in
+            guard let self else {return}
+            self.addGradient()
+            self.addSubview(self.playButton)
+            self.addSubview(self.downloadButton)
+            
+            self.applyConstraints()
+        }
+    }
+    
+    
+    
 }
 

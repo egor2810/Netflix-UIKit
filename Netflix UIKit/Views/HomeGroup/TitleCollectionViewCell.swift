@@ -16,6 +16,7 @@ final class TitleCollectionViewCell: UICollectionViewCell {
        
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         
         return imageView
     }()
@@ -39,7 +40,18 @@ final class TitleCollectionViewCell: UICollectionViewCell {
         guard let url = URL(string: "\(Constants.imageBaseURL)\(model)") 
         else {return}
 
-        posterImageView.sd_setImage(with: url, completed: nil)
+        posterImageView.sd_setImage(with: url) {[weak self] image, _, _, url in
+            guard let self else {return}
+            
+            guard let image else {
+                DispatchQueue.main.async {
+                    self.posterImageView.contentMode = .scaleAspectFit
+                    self.posterImageView.image = UIImage(systemName: "nosign")
+                    print(url)
+                }
+                return
+            }
+        }
         
     }
 }

@@ -38,7 +38,7 @@ enum Sections: Int, CaseIterable {
     var path: String {
         switch self {
         case .trendingMovies:
-            "/trending/movie/day"
+            "/trending/movie/week"
         case .trendingTv:
             "/trending/tv/day"
         case .popular:

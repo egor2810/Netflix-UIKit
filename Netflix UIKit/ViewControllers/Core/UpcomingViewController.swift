@@ -39,7 +39,7 @@ final class UpcomingViewController: UIViewController {
     
     private func setupUI() {
         view.backgroundColor = .systemBackground
-        title = sectionConst.description
+        navigationItem.title = sectionConst.description
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationItem.largeTitleDisplayMode = .always
     }

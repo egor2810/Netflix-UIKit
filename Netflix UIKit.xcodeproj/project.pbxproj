@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F772FDCD2BD8164700D24299 /* SearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F772FDCC2BD8164700D24299 /* SearchResultViewController.swift */; };
 		F7CD16322BD50AE600D8DA40 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CD16312BD50AE600D8DA40 /* AppDelegate.swift */; };
 		F7CD16342BD50AE600D8DA40 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CD16332BD50AE600D8DA40 /* SceneDelegate.swift */; };
 		F7CD16362BD50AE600D8DA40 /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CD16352BD50AE600D8DA40 /* MainTabBarViewController.swift */; };
@@ -29,6 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F772FDCC2BD8164700D24299 /* SearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewController.swift; sourceTree = "<group>"; };
 		F7CD162E2BD50AE600D8DA40 /* Netflix UIKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Netflix UIKit.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7CD16312BD50AE600D8DA40 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F7CD16332BD50AE600D8DA40 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -63,6 +65,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F772FDC92BD8155D00D24299 /* HomeGroup */ = {
+			isa = PBXGroup;
+			children = (
+				F7CD16582BD520EC00D8DA40 /* CollectionViewTableViewCell.swift */,
+				F7CD165A2BD52A7A00D8DA40 /* HeroHeaderUIView.swift */,
+				F7CD16622BD59C7800D8DA40 /* TitleCollectionViewCell.swift */,
+			);
+			path = HomeGroup;
+			sourceTree = "<group>";
+		};
+		F772FDCA2BD8156E00D24299 /* UpcomigGroup */ = {
+			isa = PBXGroup;
+			children = (
+				F7CD166B2BD6C2EA00D8DA40 /* UpcomingTitleTableViewCell.swift */,
+			);
+			path = UpcomigGroup;
+			sourceTree = "<group>";
+		};
+		F772FDCB2BD8163000D24299 /* General */ = {
+			isa = PBXGroup;
+			children = (
+				F772FDCC2BD8164700D24299 /* SearchResultViewController.swift */,
+			);
+			path = General;
+			sourceTree = "<group>";
+		};
 		F7CD16252BD50AE600D8DA40 = {
 			isa = PBXGroup;
 			children = (
@@ -99,7 +127,8 @@
 			isa = PBXGroup;
 			children = (
 				F7CD16352BD50AE600D8DA40 /* MainTabBarViewController.swift */,
-				F7CD164F2BD519AE00D8DA40 /* Controllers */,
+				F7CD164F2BD519AE00D8DA40 /* Core */,
+				F772FDCB2BD8163000D24299 /* General */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -114,7 +143,7 @@
 			path = App;
 			sourceTree = "<group>";
 		};
-		F7CD164F2BD519AE00D8DA40 /* Controllers */ = {
+		F7CD164F2BD519AE00D8DA40 /* Core */ = {
 			isa = PBXGroup;
 			children = (
 				F7CD16472BD50E7000D8DA40 /* HomeViewController.swift */,
@@ -122,16 +151,14 @@
 				F7CD164B2BD50EBD00D8DA40 /* SearchViewController.swift */,
 				F7CD164D2BD50F0F00D8DA40 /* DownloadsViewController.swift */,
 			);
-			path = Controllers;
+			path = Core;
 			sourceTree = "<group>";
 		};
 		F7CD16502BD51F8200D8DA40 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				F7CD16582BD520EC00D8DA40 /* CollectionViewTableViewCell.swift */,
-				F7CD165A2BD52A7A00D8DA40 /* HeroHeaderUIView.swift */,
-				F7CD16622BD59C7800D8DA40 /* TitleCollectionViewCell.swift */,
-				F7CD166B2BD6C2EA00D8DA40 /* UpcomingTitleTableViewCell.swift */,
+				F772FDC92BD8155D00D24299 /* HomeGroup */,
+				F772FDCA2BD8156E00D24299 /* UpcomigGroup */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -259,6 +286,7 @@
 				F7CD16322BD50AE600D8DA40 /* AppDelegate.swift in Sources */,
 				F7CD16342BD50AE600D8DA40 /* SceneDelegate.swift in Sources */,
 				F7CD164A2BD50E9C00D8DA40 /* UpcomingViewController.swift in Sources */,
+				F772FDCD2BD8164700D24299 /* SearchResultViewController.swift in Sources */,
 				F7CD16482BD50E7000D8DA40 /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

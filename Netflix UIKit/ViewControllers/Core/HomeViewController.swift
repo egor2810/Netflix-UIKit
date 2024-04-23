@@ -11,6 +11,12 @@ final class HomeViewController: UIViewController {
     
     let sectionTitles = Sections.allCases.map { $0.description }
     
+    private let headerView: HeroHeaderUIView = {
+        
+        let view = HeroHeaderUIView( )
+        return view
+    }()
+    
     private let homeFeedTable: UITableView = {
         let table = UITableView(frame: .zero, style: .grouped)
         table.backgroundColor = .clear
@@ -33,20 +39,33 @@ final class HomeViewController: UIViewController {
         homeFeedTable.dataSource = self
 
         configureNavBar()
-        
-        let headerView = HeroHeaderUIView(
-            frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 459)
-        )
-        
+ 
         homeFeedTable.tableHeaderView = headerView
+        
+        configureHeader()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        headerView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 459)
         homeFeedTable.frame = view.bounds
     }
     
     // MARK: - Configure UI
+    private func configureHeader() {
+        NetworkManager.shared.fetchTrendingTitles(for: Sections.trendingMovies) {[weak self] result in
+            guard let self else {return}
+            
+            switch result {
+                case .success(let movies):
+                    guard let movie = movies.first else {return}
+                    self.headerView.configure(with: movie)
+                case .failure(let failure):
+                    print(failure.localizedDescription)
+            }
+        }
+    }
+    
     private func configureNavBar() {
         var image = UIImage(named: "logo")
         image = image?.withRenderingMode(.alwaysOriginal)
