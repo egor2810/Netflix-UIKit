@@ -53,12 +53,12 @@ final class HomeViewController: UIViewController {
     
     // MARK: - Configure UI
     private func configureHeader() {
-        NetworkManager.shared.fetchTrendingTitles(for: Sections.trendingMovies) {[weak self] result in
+        NetworkManager.shared.tmdbGetTrendingTitles(for: Sections.trendingMovies) {[weak self] result in
             guard let self else {return}
             
             switch result {
                 case .success(let movies):
-                    guard let movie = movies.first else {return}
+                    guard let movie = movies.results.first else {return}
                     self.headerView.configure(with: movie)
                 case .failure(let failure):
                     print(failure.localizedDescription)
@@ -84,10 +84,10 @@ final class HomeViewController: UIViewController {
 
     // MARK: - getTrendingTitles
     private func getTrendingTitles(for section: Sections, in cell: CollectionViewTableViewCell) {
-        NetworkManager.shared.fetchTrendingTitles(for: section) { result in
+        NetworkManager.shared.tmdbGetTrendingTitles(for: section) { result in
             switch result {
                 case .success(let movies):
-                    cell.configure(with: movies)
+                    cell.configure(with: movies.results)
                 case .failure(let failure):
                     print(failure.localizedDescription)
             }

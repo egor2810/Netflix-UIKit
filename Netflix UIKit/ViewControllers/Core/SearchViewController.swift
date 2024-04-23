@@ -63,12 +63,12 @@ final class SearchViewController: UIViewController {
     }
     
     private func getDiscoverTitles() {
-        NetworkManager.shared.fetchDiscoverTitles {[weak self] result in
+        NetworkManager.shared.tmdbDiscoverTitles {[weak self] result in
             guard let self else {return}
             
             switch result {
             case .success(let titles):
-                self.titles = titles
+                    self.titles = titles.results
                     DispatchQueue.main.async {
                         self.searchTable.reloadData()
                     }
@@ -126,11 +126,11 @@ extension SearchViewController: UISearchResultsUpdating {
                 
         else { return }
             
-        NetworkManager.shared.searchTitles(query: query) { result in
+        NetworkManager.shared.tmdbSearchTitles(query: query) { result in
             DispatchQueue.main.async {
                 switch result {
                     case .success(let movies):
-                        resultsController.titles = movies
+                        resultsController.titles = movies.results
                         resultsController.searchResultsCollectionView.reloadData()
                     case .failure(let failure):
                         print(failure.localizedDescription)

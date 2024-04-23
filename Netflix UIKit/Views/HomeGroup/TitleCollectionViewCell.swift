@@ -37,17 +37,16 @@ final class TitleCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(with model: String) {
-        guard let url = URL(string: "\(Constants.imageBaseURL)\(model)") 
+        guard let url = URL(string: "\(Constants.tmdbImageBaseUrl)\(model)") 
         else {return}
 
         posterImageView.sd_setImage(with: url) {[weak self] image, _, _, url in
             guard let self else {return}
             
-            guard let image else {
+            guard image != nil else {
                 DispatchQueue.main.async {
                     self.posterImageView.contentMode = .scaleAspectFit
                     self.posterImageView.image = UIImage(systemName: "nosign")
-                    print(url)
                 }
                 return
             }

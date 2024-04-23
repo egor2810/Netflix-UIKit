@@ -63,7 +63,7 @@ class UpcomingTitleTableViewCell: UITableViewCell {
     
     func configure(with title: Title) {
         
-        guard let url = URL(string: "\(Constants.imageBaseURL)\(title.poster_path ?? "")")
+        guard let url = URL(string: "\(Constants.tmdbImageBaseUrl)\(title.poster_path ?? "")")
         else {return}
         titleLabel.text = title.original_name ?? title.original_title ?? "Unknown"
         

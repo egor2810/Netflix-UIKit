@@ -7,104 +7,38 @@
 
 import Foundation
 
-enum APIError: Error {
-    case failedToDecodeData
-}
-
 final class NetworkManager {
     
     static let shared = NetworkManager()
     
     private init() {}
     
-    func fetchTrendingTitles(for section: Sections, completion: @escaping (Result<[Title], Error>) -> Void) {
+    // MARK: - tmdb methods
+    func tmdbGetTrendingTitles(for section: Sections, completion: @escaping (Result<TrendingTitleResponse, Error>) -> Void) {
         
-        guard let url = URL(string: "\(Constants.baseURL)/3\(section.path)") else {
+        guard let url = URL(string: "\(Constants.tmdbBaseUrl)/3\(section.path)") else {
             print("Invalid URL")
             return
         }
         
-        var components = URLComponents(url: url, resolvingAgainstBaseURL: true)!
+        let components = Components.tmdbDiscover.value(for: url)
         
-        // Добавление необходимых параметров запроса
-        let queryItems = [
-            URLQueryItem(name: "api_key", value: Constants.API_KEY),
-            URLQueryItem(name: "language", value: "en-US"),
-            URLQueryItem(name: "page", value: "1")
-        ]
-        components.queryItems = (components.queryItems ?? []) + queryItems
-        
-        guard let finalURL = components.url else {
-            print("Invalid URL components")
-            return
-        }
-        
-        var request = URLRequest(url: finalURL)
-        request.httpMethod = "GET"
-        request.timeoutInterval = 10
-        request.addValue("application/json", forHTTPHeaderField: "accept")
-        
-        let task = URLSession.shared.dataTask(with: request) { data, _, error in
-            guard let data = data, error == nil else {
-                return
-            }
-            
-            do {
-                let results = try JSONDecoder().decode(TrendingTitleResponse.self, from: data)
-                completion(.success(results.results))
-            } catch {
-                completion(.failure(APIError.failedToDecodeData))
-            }
-        }
-        
-        task.resume()
+        request(for: TrendingTitleResponse.self, with: components, completion: completion)
     }
     
-    // MARK: -  Discover titles
-    func fetchDiscoverTitles(completion: @escaping (Result<[Title], Error>) -> Void) {
+    func tmdbDiscoverTitles(completion: @escaping (Result<TrendingTitleResponse, Error>) -> Void) {
         
         guard let url = URL(string: "https://api.themoviedb.org/3/discover/movie") else {
             print("Invalid URL")
             return
         }
         
-        var components = URLComponents(url: url, resolvingAgainstBaseURL: true)!
+        let components = Components.tmdbDiscover.value(for: url)
         
-        // Добавление необходимых параметров запроса
-        let queryItems = [
-            URLQueryItem(name: "api_key", value: Constants.API_KEY),
-            URLQueryItem(name: "language", value: "en-US"),
-            URLQueryItem(name: "page", value: "1")
-        ]
-        components.queryItems = (components.queryItems ?? []) + queryItems
-        
-        guard let finalURL = components.url else {
-            print("Invalid URL components")
-            return
-        }
-        
-        var request = URLRequest(url: finalURL)
-        request.httpMethod = "GET"
-        request.timeoutInterval = 10
-        request.addValue("application/json", forHTTPHeaderField: "accept")
-        
-        let task = URLSession.shared.dataTask(with: request) { data, _, error in
-            guard let data = data, error == nil else {
-                return
-            }
-            
-            do {
-                let results = try JSONDecoder().decode(TrendingTitleResponse.self, from: data)
-                completion(.success(results.results))
-            } catch {
-                completion(.failure(APIError.failedToDecodeData))
-            }
-        }
-        
-        task.resume()
+        request(for: TrendingTitleResponse.self, with: components, completion: completion)
     }
     
-    func searchTitles(query: String, completion: @escaping (Result<[Title], Error>) -> Void) {
+    func tmdbSearchTitles(query: String, completion: @escaping (Result<TrendingTitleResponse, Error>) -> Void) {
         guard let query = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
         else {return}
         
@@ -113,15 +47,28 @@ final class NetworkManager {
             return
         }
         
-        var components = URLComponents(url: url, resolvingAgainstBaseURL: true)!
+        let components = Components.tmdbSearch.value(for: url, query: query)
         
-        // Добавление необходимых параметров запроса
-        let queryItems = [
-            URLQueryItem(name: "query", value: query),
-            URLQueryItem(name: "api_key", value: Constants.API_KEY)
-        ]
-        components.queryItems = (components.queryItems ?? []) + queryItems
+        request(for: TrendingTitleResponse.self, with: components, completion: completion)
+    }
         
+    // MARK: - YouTube api methods
+    func ytGetMovie(query: String, completion: @escaping (Result<TrendingTitleResponse, Error>) -> Void) {
+        guard let query = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+        else {return}
+        
+        guard let url = URL(string: Constants.youtubeBaseUrl) else {
+            print("Invalid URL")
+            return
+        }
+        
+        let components = Components.youtubeSearch.value(for: url, query: query)
+        
+        request(for: TrendingTitleResponse.self, with: components, completion: completion)
+    }
+    
+    // MARK: - main request method
+    private func request<T>(for: T.Type, with components: URLComponents, completion: @escaping (Result<T, Error>) -> Void) where T: Decodable {
         guard let finalURL = components.url else {
             print("Invalid URL components")
             return
@@ -138,8 +85,8 @@ final class NetworkManager {
             }
             
             do {
-                let results = try JSONDecoder().decode(TrendingTitleResponse.self, from: data)
-                completion(.success(results.results))
+                let results = try JSONDecoder().decode(T.self, from: data)
+                completion(.success(results))
             } catch {
                 completion(.failure(APIError.failedToDecodeData))
             }
@@ -147,5 +94,6 @@ final class NetworkManager {
         
         task.resume()
     }
+    
 
 }
