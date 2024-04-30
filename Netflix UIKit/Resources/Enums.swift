@@ -28,13 +28,16 @@ enum Components {
                 queryItems = [
                     URLQueryItem(name: "api_key", value: Constants.tmdbApiKey),
                     URLQueryItem(name: "language", value: "en-US"),
-                    URLQueryItem(name: "page", value: "1"),
-                    URLQueryItem(name: "query", value: query)
+                    URLQueryItem(name: "page", value: "1")
+                    
                 ]
+                if let query {
+                    queryItems.append(URLQueryItem(name: "query", value: query))
+                }
             case .youtubeSearch:
                 queryItems = [
-                    URLQueryItem(name: "key", value: Constants.youtubeApiKey),
-                    URLQueryItem(name: "query", value: query)
+                    URLQueryItem(name: "q", value: query),
+                    URLQueryItem(name: "key", value: Constants.youtubeApiKey)
                 ]
         }
         components.queryItems = (components.queryItems ?? []) + queryItems

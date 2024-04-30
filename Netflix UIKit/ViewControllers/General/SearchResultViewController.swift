@@ -58,7 +58,7 @@ extension SearchResultViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
-        cell.configure(with: titles[indexPath.row].poster_path ?? "")
+        cell.configure(with: titles[indexPath.row])
   
         return cell
     }

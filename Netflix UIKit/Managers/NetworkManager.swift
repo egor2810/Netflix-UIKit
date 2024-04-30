@@ -37,7 +37,7 @@ final class NetworkManager {
         
         request(for: TrendingTitleResponse.self, with: components, completion: completion)
     }
-    
+    // MARK: search
     func tmdbSearchTitles(query: String, completion: @escaping (Result<TrendingTitleResponse, Error>) -> Void) {
         guard let query = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
         else {return}
@@ -53,7 +53,7 @@ final class NetworkManager {
     }
         
     // MARK: - YouTube api methods
-    func ytGetMovie(query: String, completion: @escaping (Result<TrendingTitleResponse, Error>) -> Void) {
+    func ytGetMovie(query: String, completion: @escaping (Result<YTSearchResponce, Error>) -> Void) {
         guard let query = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
         else {return}
         
@@ -64,7 +64,7 @@ final class NetworkManager {
         
         let components = Components.youtubeSearch.value(for: url, query: query)
         
-        request(for: TrendingTitleResponse.self, with: components, completion: completion)
+        request(for: YTSearchResponce.self, with: components, completion: completion)
     }
     
     // MARK: - main request method
@@ -75,8 +75,9 @@ final class NetworkManager {
         }
         
         var request = URLRequest(url: finalURL)
+        print(finalURL)
         request.httpMethod = "GET"
-        request.timeoutInterval = 10
+        request.timeoutInterval = 15
         request.addValue("application/json", forHTTPHeaderField: "accept")
         
         let task = URLSession.shared.dataTask(with: request) { data, _, error in
