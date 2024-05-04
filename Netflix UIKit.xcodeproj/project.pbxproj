@@ -29,6 +29,7 @@
 		F7CD16682BD59FB700D8DA40 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = F7CD16672BD59FB700D8DA40 /* SDWebImageMapKit */; };
 		F7CD166A2BD5A80200D8DA40 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CD16692BD5A80200D8DA40 /* Constants.swift */; };
 		F7CD166C2BD6C2EA00D8DA40 /* UpcomingTitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CD166B2BD6C2EA00D8DA40 /* UpcomingTitleTableViewCell.swift */; };
+		F7DFAC302BE0C0E6008CD39F /* TitlePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DFAC2F2BE0C0E6008CD39F /* TitlePreviewViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		F7CD16622BD59C7800D8DA40 /* TitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCollectionViewCell.swift; sourceTree = "<group>"; };
 		F7CD16692BD5A80200D8DA40 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		F7CD166B2BD6C2EA00D8DA40 /* UpcomingTitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingTitleTableViewCell.swift; sourceTree = "<group>"; };
+		F7DFAC2F2BE0C0E6008CD39F /* TitlePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitlePreviewViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +93,7 @@
 			isa = PBXGroup;
 			children = (
 				F772FDCC2BD8164700D24299 /* SearchResultViewController.swift */,
+				F7DFAC2F2BE0C0E6008CD39F /* TitlePreviewViewController.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -287,6 +290,7 @@
 				F772FDCF2BD8351000D24299 /* Enums.swift in Sources */,
 				F7CD16592BD520EC00D8DA40 /* CollectionViewTableViewCell.swift in Sources */,
 				F7CD165B2BD52A7A00D8DA40 /* HeroHeaderUIView.swift in Sources */,
+				F7DFAC302BE0C0E6008CD39F /* TitlePreviewViewController.swift in Sources */,
 				F7CD166C2BD6C2EA00D8DA40 /* UpcomingTitleTableViewCell.swift in Sources */,
 				F7CD164E2BD50F0F00D8DA40 /* DownloadsViewController.swift in Sources */,
 				F7CD166A2BD5A80200D8DA40 /* Constants.swift in Sources */,

@@ -75,7 +75,7 @@ final class NetworkManager {
         }
         
         var request = URLRequest(url: finalURL)
-        print(finalURL)
+//        print(finalURL)
         request.httpMethod = "GET"
         request.timeoutInterval = 15
         request.addValue("application/json", forHTTPHeaderField: "accept")

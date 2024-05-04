@@ -54,4 +54,6 @@ final class TitleCollectionViewCell: UICollectionViewCell {
         }
         
     }
+    
+    
 }

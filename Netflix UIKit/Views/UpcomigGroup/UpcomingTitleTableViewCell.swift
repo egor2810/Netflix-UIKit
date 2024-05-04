@@ -65,7 +65,7 @@ class UpcomingTitleTableViewCell: UITableViewCell {
         
         guard let url = URL(string: "\(Constants.tmdbImageBaseUrl)\(title.poster_path ?? "")")
         else {return}
-        titleLabel.text = title.original_name ?? title.original_title ?? "Unknown"
+        titleLabel.text = title.name ?? title.title ?? "Unknown"
         
         titlePosterImageView.sd_setImage(with: url, completed: nil)
     }

@@ -17,11 +17,17 @@ struct Title: Decodable {
     let media_type: String?
     let original_name: String?
     let original_title: String?
+    let title: String?
+    let name: String?
     let poster_path: String?
     let overview: String?
     let vote_count: Int
     let release_date: String?
     let vote_average: Double
+    
+    var titleName: String {
+        name ?? title ?? "Unknown"
+    }
 }
 
 /*

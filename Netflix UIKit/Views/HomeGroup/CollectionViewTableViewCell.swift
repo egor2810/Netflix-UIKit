@@ -7,10 +7,16 @@
 
 import UIKit
 
+protocol CollectionViewTableViewCellDelegate: AnyObject {
+    func collectionViewTableViewCellDidTapCell(titleItem: Title)
+}
+
 final class CollectionViewTableViewCell: UITableViewCell {
     static let identifier = "CollectionViewTableViewCell"
     
     private var titles: [Title] = []
+    
+    var delegate: CollectionViewTableViewCellDelegate!
     
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -75,21 +81,11 @@ extension CollectionViewTableViewCell: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegate
 extension CollectionViewTableViewCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        collectionView.deselectItem(at: indexPath, animated: true)
+        
         let title = titles[indexPath.item]
-        guard let titleName = title.original_name ?? title.original_title else {return}
-        print(titleName)
-        NetworkManager.shared.ytGetMovie(query: titleName + " trailer") { result in
-            switch result {
-                case .success(let result):
-                    result.items.forEach {
-                        
-                        print($0.id.videoId)
-                    }
-                case .failure(let error):
-                    print(error.localizedDescription)
-            }
-        }
+        self.delegate.collectionViewTableViewCellDidTapCell(titleItem: title)
+        
     }
+    
 }
 

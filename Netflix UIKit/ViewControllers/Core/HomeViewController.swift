@@ -124,6 +124,8 @@ extension HomeViewController: UITableViewDataSource {
             return cell
         }
         
+        cell.delegate = self
+        
         return cell
     }
 
@@ -173,4 +175,14 @@ extension HomeViewController: UITableViewDelegate {
         navigationController?.navigationBar.transform = .init(translationX: 0, y: min(0, -offset))
     }
     
+}
+
+
+extension HomeViewController: CollectionViewTableViewCellDelegate {
+    func collectionViewTableViewCellDidTapCell(titleItem: Title) {
+        let screen = TitlePreviewViewController()
+        screen.titleItem = titleItem
+
+        navigationController?.pushViewController(screen, animated: true)
+    }
 }
